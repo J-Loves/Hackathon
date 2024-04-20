@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+#uploadedImage {
+    max-width: 300px;
+    margin-top: 20px;
+}
