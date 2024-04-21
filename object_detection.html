@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    <link rel="stylesheet" href="resources/Objects.css">
+
+</head>
+
+<body>
+    <div class="header">
+        <h1>Scrap Map AI Scan</h1>
+        <nav class="navbar">
+            <a href="index.html" class="nav-link">Home</a>
+        </nav>
+    </div>
+    <div class="elements">
+        <div class="video-container">
+            <video id="videoElement" width="640" height="480"></video>
+            <canvas id="canvasElement" width="640" height="480"></canvas>
+        </div>
+        <fieldset>
+            <legend>Objects</legend>
+            <ul id="objectList"></ul>
+        </fieldset>
+        
+    </div>
+    <button id="startButton">Start Object Detection</button>  
+    <script>
+        let model, video, objectsList, detectedObjects = {};
+
+        function initObjectsList() {
+            objectsList = document.getElementById('objectList');
+        }
+
+        function updateObjectList(objects) {
+            objects.forEach(object => {
+                const {
+                    class: className
+                } = object;
+                if (!(className in detectedObjects)) {
+                    detectedObjects[className] = true;
+                    const listItem = document.createElement('li');
+                    listItem.textContent = className;
+                    objectsList.appendChild(listItem);
+                }
+            });
+        }
+
+        async function loadModel() {
+            model = await cocoSsd.load();
+        }
+
+        async function detectObjects() {
+            const canvas = document.getElementById('canvasElement');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const predictions = await model.detect(video);
+            updateObjectList(predictions);
+
+            predictions.forEach(prediction => {
+                const [x, y, width, height] = prediction.bbox;
+                ctx.beginPath();
+                ctx.rect(x, y, width, height);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = 'red';
+                ctx.fillStyle = 'red';
+                ctx.stroke();
+                ctx.fillText(prediction.class, x, y - 5);
+            });
+
+            requestAnimationFrame(detectObjects);
+        }
+
+        async function startDetection() {
+            initObjectsList();
+            video = document.getElementById('videoElement');
+
+            if (navigator.mediaDevices.getUserMedia) {
+                await loadModel();
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: true
+                });
+                video.srcObject = stream;
+                video.onloadedmetadata = () => {
+                    video.play();
+                    detectObjects();
+                };
+            } else {
+                console.error('getUserMedia is not supported by this browser.');
+            }
+        }
+
+        document.getElementById('startButton').addEventListener('click', startDetection);
+    </script>
+</body>
+
+</html>
