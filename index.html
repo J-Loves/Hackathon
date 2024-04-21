@@ -4,30 +4,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style.css" rel="stylesheet">
-    <title>Scrapmap</title>
+    <link href="resources/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="resources/button.css">
+    <title>ScrapMap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="resources/upload.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ff1b900710.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
+
+    <!-- Set the title and Nav -->
     <div class="header">
-        <h1 class="title">ScrapMap</h1>
-        <h2>Make a meal with just some scraps!</h2>
-    </div>
-    <div class="body">
-        <div class="image-upload">
-            <input type="file" id="fileInput">
-            <img id="uploadedImage" src="#" alt="Uploaded Image">
-            <script src="script.js"></script>
-        </div>
-        <div class="ingredients-ls">
-            <h3 class="list">
-                List
-            </h3>
-        </div>
-        <div class="input">
-            <input type="text">
+        <h1>Scrap Map</h1>
+        <div class="nav">
+            <a href="Lister.html" class="nav">Lister</a>
+            <a href="object_detection.html" class="nav">AI Scan</a>
+            <a href="contact.html" class="nav">contact</a>
         </div>
     </div>
+    <!-- Set the main divs (upload, lists, input) -->
+    <div class="container">
+        <div class="intro">
+            <p>
+                Scrap Map is a revolutionary web application designed to help you make the most out of your kitchen
+                ingredients. Our mission is simple: to reduce food waste by providing you with delicious recipes based
+                on the
+                ingredients you already have at home.
+            </p>
+        </div>
+        <div class="box features">ScrapMap redefines cooking convenience with its array of user-friendly features.
+            Harness the
+            power of AI scanning to effortlessly identify ingredients and receive tailored recipes instantly. Engage in
+            real-time
+            culinary discussions with our chat support, keep track of past scans and results with the history feature,
+            and save your
+            favorite recipes for easy access. ScrapMap is your go-to solution for efficient, waste-free cooking that's
+            as delightful
+            as it is rewarding.
+        </div>
+        <div class="box upload">ScrapMap's AI Scan feature revolutionizes the way you approach cooking.
+            Seamlessly upload images of your ingredients or use the built-in camera feature to scan items
+            in your pantry. Our advanced AI technology instantly analyzes these inputs, unlocking a world
+            of recipe possibilities tailored to your available ingredients. Say goodbye to food waste and
+            hello to culinary creativity with ScrapMap's AI Scan—where every ingredient becomes a gateway
+            to delicious, sustainable meals. <br> <button id="startButton"><i class="fa-solid fa-comment-dots"></i> Scan Now</button>
+        </div>
+
+    </div>
+    <!-- Set the footer -->
+    <div>
+        <script>
+            // Event listener for the start button click
+            document.getElementById('startButton').addEventListener('click', () => {
+                // Open the object detection page in a new window
+                window.open('object_detection.html', '_blank');
+            });
+        </script>
+    </div>
+    <footer>
+        
+        <p>&copy; 2024 Food Item Lister</p>
+    </footer>
 </body>
 
 </html>
